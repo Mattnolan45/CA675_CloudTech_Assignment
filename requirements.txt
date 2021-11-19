@@ -1,0 +1,7 @@
+Flask==2.0.2
+google==3.0.0
+google-cloud==0.34.0
+google-auth==2.3.3
+google-cloud-bigquery== 2.30.1
+pyparsing==2.4.7
+gunicorn==20.1.0

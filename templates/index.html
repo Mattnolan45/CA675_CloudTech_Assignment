@@ -1,0 +1,168 @@
+
+{% extends 'layout.html' %}
+
+
+{% block content %}
+<section data-bs-version="5.1" class="header19 cid-sOtoUeKXNc mbr-fullscreen" id="header19-n">
+    <div class="container">
+        <div class="media-container">
+            <div class="col-md-12 align-center">
+                <h1 class="mbr-section-title mbr-white mbr-bold mbr-fonts-style mb-3 display-1">Fly Reliable</h1>
+                <p class="mbr-text mbr-white mbr-fonts-style display-7">Arrive to your destination on time. Find what carriers you can trust.&nbsp;</p>
+                
+
+                <div class="row justify-content-center">
+                    <div class="col-12 col-md-6 col-lg-3">
+                        <div class="card-wrapper">
+                            <div class="card-box align-center">
+                                <span class="mbr-iconfont mobi-mbri-paper-plane mobi-mbri"></span>
+                                <h4 class="card-title align-center mbr-black mbr-fonts-style display-7"></h4>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section data-bs-version="5.1" class="form2 cid-sOtqUURvwJ">
+
+
+    <div class="row">
+        <div class="column">
+            <h2 class="mbr-section-title mb-4 align-center mbr-fonts-style display-2" style="font-size: 3.5rem;"><strong>Most Reliable Airlines </strong></h1>
+                <table id="TopData" class="table table-striped">
+                    <thead>
+                      <tr>
+                        <th>Airline Name</th>
+                        <th>Total Delay ( Mins )</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {% for top in TopAirlines %}
+                        <tr>
+                          <td>{{ top.name }}</td>
+                          <td>{{ top.totalDelay }}</td>
+                        </tr>
+                      {% endfor %}
+                    </tbody>
+                  </table>
+        </div>
+        <div class="column">
+            <h2 class="mbr-section-title mb-4 align-center mbr-fonts-style display-2" style="font-size: 3.5rem;"><strong>Least Reliable Airlines </strong></h1>
+
+                <table id="TopData" class="table table-striped">
+                    <thead>
+                      <tr>
+                        <th>Airline Name</th>
+                        <th>Total Delay ( Mins )</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {% for worst in worstAirlines %}
+                        <tr>
+                          <td>{{ worst.name }}</td>
+                          <td>{{ worst.totalDelay }}</td>
+                        </tr>
+                      {% endfor %}
+                    </tbody>
+                  </table>
+        </div>
+      </div>
+
+</section>
+
+
+<section data-bs-version="5.1" class="form2 cid-sOtqUURvwJ" id="form2-p">
+
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8 mx-auto mbr-form" data-form-type="formoid">
+                <form class="mbr-form form-with-styler" data-form-title="Form Name"><input type="hidden"  data-form-email="true" value="IvnRg4ARZVfopqRffKtg6VBIsku0E2awy6DiZTtku6qnqEpdbivhLhxdESzs6wwJRR8XyUeAeg/DjHOhVGCBEhHtN8SPtbPdMY+Nvko1TS4u26DRT0RbM1DvbJNc+7B8">
+                    <div class="dragArea row">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <h1 class="mbr-section-title mb-4 align-center mbr-fonts-style display-2"><strong>Enter your Departure and arrival Destinations</strong></h1>
+                            <p class="align-center" >Query flight details from 2009 - 2018</p>
+                        </div>
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            
+                        </div>
+                        <div class="col-lg col-md col-12 form-group mb-3" data-for="email">
+                            <SELECT name="origin" id="origin" class="form-control">
+                                {% for c in originList %}
+                                    <OPTION value={{ c.code }}>{{c.name}}</option>
+                                {% endfor %}
+                                </SELECT>
+                        </div>
+                        <div class="col-lg col-md col-12 form-group mb-3" data-for="email">
+                            <SELECT name="dest" id="dest" class="form-control">
+                                {% for c in destList %}
+                                    <OPTION value={{ c.code }}>{{c.name}}</option>
+                                {% endfor %}
+                                </SELECT>                        </div>
+                        <div class="mbr-section-btn col-md-auto col"><button type="submit" class="btn btn-warning display-4" id="searchButton">Search Now!</button></div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div id="searchResults"></div>
+
+
+
+
+</section>
+
+<style>
+.column {
+  float: left;
+  width: 50%;
+}
+
+.row {
+    margin: 20px;
+}
+
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+</style>
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script>
+
+    $(document).on('click','#searchButton',function(e){
+      e.preventDefault();
+
+      var inputData = {
+            origin : $("#origin").val(),
+            dest : $("#dest").val()
+        };
+
+        origin = $("#origin").val();
+        dest = $("#dest").val();
+
+
+      $.ajax({
+        type:'POST',
+        url:'/search',
+        data: { 'origin' : origin , 'dest' : dest},
+        success:function(response){
+            $("#searchResults").html(response);
+        },
+        error: function(xhr) {
+            console.log(xhr);
+        }
+      })
+    });
+
+</script>
+{% endblock %}

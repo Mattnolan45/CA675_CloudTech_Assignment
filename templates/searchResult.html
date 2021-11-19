@@ -1,0 +1,29 @@
+{% if resultList|length > 0 %}
+    <table id="SearchResultData" class="table table-striped">
+        <thead>
+        <tr>
+            <th>Airline Name</th>
+            <th>Origin</th>
+            <th>Destination</th>
+            <th>Delay ( Mins )</th>
+            <th>Flight Time ( Mins )</th>
+            <th>Distance ( Miles )</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for result in resultList %}
+            <tr>
+            <td>{{ result.carrierName }}</td>
+            <td>{{ result.origin }}</td>
+            <td>{{ result.dest }}</td>
+            <td>{{ result.dep_delay }}</td>
+            <td>{{ result.air_time }}</td>
+            <td>{{ result.distance }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% else %}
+    <h4 class="align-center">No results returned</h4>
+
+{% endif %}
